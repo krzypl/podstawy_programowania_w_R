@@ -1,0 +1,122 @@
+---
+title: "Podstawy programowania w Scilab i R"
+author: "Krzysztof Pleskot<br>krzypl@amu.edu.pl<br>pok. 170"
+date: "2023-12-13"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+def.chunk.hook  <- knitr::knit_hooks$get("chunk")
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- def.chunk.hook(x, options)
+  ifelse(options$size != "normalsize", paste0("\n \\", options$size,"\n\n", x, "\n\n \\normalsize"), x)
+})
+```
+
+
+##
+
+Programowanie - proces tworzenia serii instrukcji, które informują komputer jak wykonać pewne zadanie
+
+## Po co światu programowanie
+
+- Automatyzacja pracy
+- Łatwość powielania określonych rozwiązań i ich rozbudowywania
+- Reprodukowalność
+
+##
+
+Czy programowanie jest tylko dla programistów?
+
+## Co jest niezbędne do programowania?
+
+- Czas
+- Cierpliwość
+- Zapał
+- Elementarna wiedza matematyczna
+
+## Język programowania
+
+- Definicja - zbiór zasad określających, kiedy ciąg symboli tworzy
+program komputerowy oraz jakie obliczenia opisuje (by Wikipedia)
+- Nie ma jednego najlepszego języka
+
+## R jako język programowania
+
+- Open source
+- Język interpretowalny
+- Bardzo dobrze nadaje się do analizy i wizualizacji danych
+- Możliwość rozszerzenia funkcjonalności dzięki dodatkowym pakietom
+- Możliwa obsługa za pomocą zintegrowanego środowiska programistycznego (ang. Integrated Development Environment, IDE)
+
+- Nie jest specjalnie szybki
+- Istnieje w nim wiele niekonsekwencji
+
+## Skąd można dowiedzieć się więcej?
+
+- <https://jakubnowosad.com/elp/> - Elementarz programisty R
+- <https://r4ds.had.co.nz/> - R for data science
+- <https://jrnold.github.io/r4ds-exercise-solutions/> - solutions for r4ds
+- <https://couttsgeodata.netlify.app/post/2021-02-28-r_geoscience/> - lista
+paczek R przeznaczona do analizy danych geologicznych
+- <https://stackoverflow.com/questions/tagged/r>
+- Google
+
+## Materiały do zajęć
+
+<https://github.com/krzypl/podstawy_programowania_w_R>
+
+## Trochę inspiracji
+```{r echo = TRUE, message=FALSE, warning=FALSE, out.width="50%"}
+library(GGally)
+data(tips, package = "reshape")
+ggpairs(tips[, c(1, 3, 4, 2)],
+  upper = list(continuous = "density", combo = "box_no_facet"),
+  lower = list(continuous = "points", combo = "dot_no_facet"))
+```
+
+## Trochę inspiracji
+
+```{r echo = FALSE, message=FALSE, warning=FALSE}
+library(ggplot2)
+library(dplyr)
+library(maps)
+library(viridis)
+UK <- map_data("world") %>% filter(region=="UK")
+data <- world.cities %>% filter(country.etc=="UK")
+mybreaks <- c(0.02, 0.04, 0.08, 1, 7)
+
+data %>%
+ arrange(pop) %>%
+ mutate( name=factor(name, unique(name))) %>%
+ ggplot() +
+    geom_polygon(data = UK, aes(x=long, y = lat, group = group), fill="grey", alpha=0.3) +
+    geom_point( aes(x=long, y=lat, size=pop, color=pop), alpha=0.9) +
+    scale_size_continuous(range=c(1,12)) +
+    scale_color_viridis(trans="log") +
+    theme_void() + ylim(50,59) + coord_map() + theme(legend.position="none")
+```
+
+## Skrypt do wygenerowania mapy
+:::{.small}
+```{r eval=FALSE, echo=TRUE}
+library(ggplot2)
+library(dplyr)
+library(maps)
+library(viridis)
+UK <- map_data("world") %>% filter(region=="UK")
+data <- world.cities %>% filter(country.etc=="UK")
+mybreaks <- c(0.02, 0.04, 0.08, 1, 7)
+data %>% arrange(pop) %>%
+ mutate( name=factor(name, unique(name))) %>%
+ ggplot() +
+    geom_polygon(data = UK, aes(x=long, y = lat, group = group),
+                 fill="grey", alpha=0.3) +
+    geom_point( aes(x=long, y=lat, size=pop, color=pop), alpha=0.9) +
+    scale_size_continuous(range=c(1,12)) +
+    scale_color_viridis(trans="log") +
+    theme_void() + ylim(50,59) + coord_map() +
+  theme(legend.position="none")
+```
+:::
