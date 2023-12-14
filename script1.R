@@ -65,8 +65,6 @@ macierz3[1,]
 macierz1[c(1, 2),]
 macierz1[macierz1 > 8]
 
-#jak stworzyć wykres zestawiajacy obserwacje z kolumny 1 i 2 macierz1? Jak dla wierszy 2 i 3?
-
 #ramka danych (data.frame; tibble)
 x <- data.frame(a = c(1,2,3), b = c(4,5,6), c = c("a", "b", "c"))
 x <- data.frame(a = c(1,2,3), b = c(4,5,6), c = c("a", "b", "c", "d"))
@@ -78,9 +76,6 @@ View(x)
 x$a[2]
 
 y <- data.frame(a = c(4,5,6), b = c(4,4,3), c = c("a", "b", "c"))
-
-#stwórz wykres zestawiajacy ze soba dane z kolumny a i b ramki danych y
-#stworz wykres liniowy zestawiajacy ze soba dane z kolumny a ramki danej x i y; podpowiedz - zwróc uwagę na parametr "type" w oknie pomocy plot()
 
 y1 <- y[,-3]
 x1 <- x[,-3]
