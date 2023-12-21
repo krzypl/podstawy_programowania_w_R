@@ -30,17 +30,6 @@ x0 + y
 z <- c("geologia", "jest", "fajna")
 z <- c("geologia jest fajna")
 
-y + z
-
-xx <- c(1, 2)
-xxx <- c(x, xx)
-
-x0 + xx
-
-x100 <- rnorm(n = 100, mean = 50, sd = 5)
-?rnorm
-
-
 #nazwy obiektów
 x <- "dobrze jeśli obiekt ma taką nazwę, że jesteśmy w stanie powiedzieć, jakie dane zawiera"
 nazwy_obiektow_nie_powinny_byc_jednak_za_dlugie_bo_ciezko_wykonuje_sie_pozniej_na_nich_operacje <- 1
@@ -50,46 +39,33 @@ DobrzeJestPrzyjacJakasKonwencjeZapisu_aNie_mieszac_STYLE <- 12
 
 #nazwy plików też powinny wskazywac na ich zawartosc, czyli np. staramy sie nie zapisywac plikow jako "kod.csv" albo "xyzq.R"; unikamy jednoczesnie znakow dialrytycznych, znakow specjalnych i spacji; przydaje sie tez nadac numer na poczatku nazwy, jesli mamy jakas ustalona kolejnosc wykonywania analiz
 
+#wykorzystanie funkcji dla wektorów
 
+x_norm <- seq(from = -4, to = 4, length.out = 100)
+x_norm
+?seq
+x_norm <- seq(-4, 4, length.out = 100) #co się stanie, jeśli nie wpiszemy nazwy argumentu length.out?
+y_norm <- dnorm(x_norm)
 
-#obiekty złożone
-#macierze (matrix)
-macierz1 = matrix(1:12, nrow = 4, ncol = 3)
-macierz1 + 1
-macierz2 <- matrix(c(1,2,3,4,5,6,7,8,9,10,11,"a"), nrow = 4, ncol = 3)
-macierz2 + 1
-macierz3 <- macierz1
-macierz1 + macierz3
-macierz1[1,2]
-macierz3[1,]
-macierz1[c(1, 2),]
-macierz1[macierz1 > 8]
+plot(x_norm, y_norm, type = "l")
 
-#ramka danych (data.frame; tibble)
-x <- data.frame(a = c(1,2,3), b = c(4,5,6), c = c("a", "b", "c"))
-x <- data.frame(a = c(1,2,3), b = c(4,5,6), c = c("a", "b", "c", "d"))
+#Zadanie: stwórz wektor atomowy o dowolnej nazwie zawierający ciąg liczb w zakresie -100 do 100 z odstępem co 5. Do zadania skorzystaj z pomocy dla funkcji seq()
 
-x$a
+#Zadanie: stwórz wektor zawierający 10 elementów literowych. Zastosuj funkcję sample(), dla wylosowania jednego z nich.
 
-View(x)
+#filtrowanie danych
+litery <- letters
 
-x$a[2]
+litery[4]
+litery["d"]
+litery[litery == "d"]
+moje_ulubione_litery <- c("k", "z")
+litery[litery %in% moje_ulubione_litery]
 
-y <- data.frame(a = c(4,5,6), b = c(4,4,3), c = c("a", "b", "c"))
+cyfry <- 1:9
 
-y1 <- y[,-3]
-x1 <- x[,-3]
+cyfry[3]
+cyfry[cyfry > 3]
+cyfry[cyfry/2 == 2]
 
-x1 + y1
-
-x + 1
-x1 + 1
-
-sqrt(x1)
-
-#listy
-
-x <- list(a = c(1,2,3), b = c("a", "b"))
-y <- list(v = list(a = c(56, 4, 12), n = "z"), b = "B")
-
-y$v$a[1]
+c(litery, cyfry)
