@@ -1,0 +1,45 @@
+---
+title: "Przedstawienie danych uziarnienia z publikacji xxx oraz sposobu ich pozyskania z wykorzystaniem R"
+author: "Krzysztof Pleskot"
+date: "2024-01-16"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Zerknij na ściągawkę dla R Markdown: <https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf>
+
+## Na początku podaj dane bibliograficzne publikacji i zamieść abstrakt artykułu
+
+tutaj abstrak
+
+## Później przejdź do pozyskania danych
+
+Dane mogą pochodzić z dowolnej lokalizacji. Interesuje nas średnia średnica ziarna. Ważne, żeby liczba obserwacji (próbek dla, których została wykonana analiza uziarnienia) nie była większa niż 150. Jeśli zestaw danych, które wybierzesz będzie miał większą liczbę obserwacji, zredukuj odpowiednio ramkę danych, żeby wyznaczony limit nie był przekroczony.
+
+Generując kod pamiętaj, żeby `echo=TRUE` i `warning=FALSE`
+
+```{r echo=TRUE, warning=FALSE}
+library(pangaear)
+pang_search <- pg_search(query = 'grain size', bbox = c(-124.2, 41.8, -116.8, 46.1))
+pang_raw <- pg_data(doi = pang_search$doi[3])
+pang_out <- pang_raw[[1]]$data
+print(pang_out)
+```
+
+## Modyfikacja danych
+
+Napisz swóją własną funkcję, która będzie przeliczać dane z mikrometrów/milimetrów (zależnie od tego, co będzie w pozyskanym zestawie danych) na skalę phi. Zastosuj tę funkcję do obliczenia wartości phi dla każder obserwacji (każdej próbki)
+
+## Przedstaw dane w skali phi względem głębokości w rdzeniu
+
+```{r echo=TRUE}
+x <- 1:10
+y <- rnorm(10)
+plot(x, y, type = "b")
+title(main = "Wartości y dla głębokości x")
+```
+
+## Zamieść opis przedstawionych danych na minimum 100 słów
